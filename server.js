@@ -1,11 +1,13 @@
 const express = require("express");
-const helmet = require('helmet')
+const helmet = require("helmet");
 const server = express();
+const projectRouter = require("./routers/project");
 
-server.use(helmet())
+server.use(helmet());
 
 server.use(express.json());
 server.use(logger);
+server.use("/api/projects", projectRouter);
 
 server.get("/", (req, res) => {
   res.send(`<h2>This is a cool API</h2>`);
