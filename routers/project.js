@@ -3,8 +3,7 @@ const router = express.Router();
 const {
   validateProject,
   validateProjectId,
-  validateAction,
-  validateActionId
+  validateAction
 } = require("../middleware");
 const Project = require("../data/helpers/projectModel");
 const Action = require("../data/helpers/actionModel");
@@ -79,6 +78,22 @@ router.get("/:id/actions", validateProjectId, (req, res) => {
     .catch(error => {
       res.status(500).json({
         errorMessage: "Internal Server Error: " + error
+      });
+    });
+});
+
+router.post("/:id/actions", validateProjectId, validateAction, (req, res) => {
+  Action.insert({
+    project_id: req.body.project_id,
+    description: req.body.description,
+    notes: req.body.notes
+  })
+    .then(action => {
+      res.status(200).json(action);
+    })
+    .catch(error => {
+      res.status(500).json({
+        errorMessage: "Server error: " + error
       });
     });
 });
