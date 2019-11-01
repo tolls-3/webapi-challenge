@@ -7,7 +7,6 @@ const {
 } = require("../middleware");
 const Project = require("../data/helpers/projectModel");
 const Action = require("../data/helpers/actionModel");
-
 router.use(express.json());
 
 router.get("/", (req, res) => {
@@ -21,7 +20,6 @@ router.get("/", (req, res) => {
       });
     });
 });
-
 router.get("/:id", validateProjectId, (req, res) => {
   Project.get(req.project.id)
     .then(project => {
@@ -33,7 +31,6 @@ router.get("/:id", validateProjectId, (req, res) => {
       });
     });
 });
-
 router.post("/", validateProject, (req, res) => {
   Project.insert(req.body)
     .then(project => {
@@ -45,7 +42,6 @@ router.post("/", validateProject, (req, res) => {
       });
     });
 });
-
 router.put("/:id", validateProjectId, validateProject, (req, res) => {
   Project.update(req.project.id, req.body)
     .then(project => {
@@ -57,7 +53,6 @@ router.put("/:id", validateProjectId, validateProject, (req, res) => {
       });
     });
 });
-
 router.delete("/:id", validateProjectId, (req, res) => {
   Project.remove(req.project.id)
     .then(project => {
@@ -69,7 +64,6 @@ router.delete("/:id", validateProjectId, (req, res) => {
       });
     });
 });
-
 router.get("/:id/actions", validateProjectId, (req, res) => {
   Project.getProjectActions(req.project.id)
     .then(actions => {
@@ -81,7 +75,6 @@ router.get("/:id/actions", validateProjectId, (req, res) => {
       });
     });
 });
-
 router.post("/:id/actions", validateProjectId, validateAction, (req, res) => {
   Action.insert({
     project_id: req.body.project_id,
@@ -97,5 +90,4 @@ router.post("/:id/actions", validateProjectId, validateAction, (req, res) => {
       });
     });
 });
-
 module.exports = router;
